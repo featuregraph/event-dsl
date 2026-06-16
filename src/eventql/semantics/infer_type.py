@@ -1,7 +1,7 @@
 # infer_type.py
 
 from eventql.semantics.types import DSLType
-from eventql.ast.nodes import Signal, Constant, Diff, Cumsum, Eq, Lt, Gt, And, Or
+from eventql.ast.nodes import Signal, Constant, Diff, Shift, Cumsum, Eq, Lt, Gt, And, Or, Enter, Exit, Before, After
 
 def infer_type(node):
 
@@ -13,6 +13,9 @@ def infer_type(node):
 
     if isinstance(node, Diff):
         return DSLType.SIGNAL
+
+    if isinstance(node, Shift):
+        return infer_type(node.expr)
 
     if isinstance(node, Cumsum):
         return DSLType.SIGNAL
@@ -49,5 +52,18 @@ def infer_type(node):
 
     if isinstance(node, Or):
         return DSLType.MASK
+
+    if isinstance(node, Enter):
+        return DSLType.MASK
+
+    if isinstance(node, Exit):
+        return DSLType.MASK
+
+    if isinstance(node, Before):
+        return DSLType.MASK
+
+    if isinstance(node, After):
+        return DSLType.MASK
+
 
     raise Exception(f"Unknown node: {node}")

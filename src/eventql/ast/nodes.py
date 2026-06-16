@@ -18,17 +18,29 @@ class Diff(Node):
     expr: Node
 
 @dataclass
-class Rise(Node):
+class Shift(Node):
+    expr: Node
+    k: int
+
+@dataclass
+class Enter(Node):
     expr: Node
 
 @dataclass
-class Fall(Node):
+class Exit(Node):
+    expr: Node
+
+@dataclass
+class Before(Node):
+    expr: Node
+
+@dataclass
+class After(Node):
     expr: Node
 
 @dataclass
 class Cumsum(Node):
     expr: Node
-
 
 @dataclass
 class Eq(Node):
